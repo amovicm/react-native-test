@@ -1,6 +1,6 @@
 import { setNavigator } from "./src/navigationRef";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Provider as NewsProvider } from "./src/context/NewsContext";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,11 +15,25 @@ const rootNavigator = createStackNavigator();
 const bottomTabNavigator = createBottomTabNavigator();
 
 const BottomTabNavigationComponent = () => {
-  return  <bottomTabNavigator.Navigator>
-    <bottomTabNavigator.Screen name="TopNews" component={TopNewsScreen} />
-    <bottomTabNavigator.Screen name="Categories" component={CategoriesScreen} />
-    <bottomTabNavigator.Screen name="Search" component={SearchScreen} />
-  </bottomTabNavigator.Navigator>;
+  return (
+    <bottomTabNavigator.Navigator
+      tabBarOptions={{
+        activeTintColor: "yellow",
+        inactiveTintColor: "white",
+        labelStyle: {
+          fontSize: 18,
+        },
+        style: { backgroundColor: "#101f39" },
+      }}
+    >
+      <bottomTabNavigator.Screen name="TopNews" component={TopNewsScreen} />
+      <bottomTabNavigator.Screen
+        name="Categories"
+        component={CategoriesScreen}
+      />
+      <bottomTabNavigator.Screen name="Search" component={SearchScreen} />
+    </bottomTabNavigator.Navigator>
+  );
 };
 
 export default function App() {
@@ -33,6 +47,7 @@ export default function App() {
         <rootNavigator.Navigator
           screenOptions={{
             headerStyle: {
+              backgroundColor: "#101f39",
               borderBottomColor: "red",
               borderBottomWidth: 3,
             },
@@ -40,19 +55,31 @@ export default function App() {
         >
           <rootNavigator.Screen
             name="Home"
-            options={{ headerTitleAlign: "center", title: "HTech Test" }}
+            options={{
+              headerTitleAlign: "center",
+              title: "HTech Test",
+              headerTintColor: "white",
+            }}
             component={BottomTabNavigationComponent}
           />
 
           <rootNavigator.Screen
             name="Article"
-            options={{ headerTitleAlign: "center", title: "HTech Test" }}
+            options={{
+              headerTitleAlign: "center",
+              title: "HTech Test",
+              headerTintColor: "white",
+            }}
             component={SingleArticleComponent}
           />
 
           <rootNavigator.Screen
             name="Category"
-            options={{ headerTitleAlign: "center", title: "HTech Test" }}
+            options={{
+              headerTitleAlign: "center",
+              title: "HTech Test",
+              headerTintColor: "white",
+            }}
             component={CategoryScreen}
           />
         </rootNavigator.Navigator>

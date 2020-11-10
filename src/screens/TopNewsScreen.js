@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";
 import NewsItemComponent from "../components/NewsItemComponent";
+import HeaderComponent from "../components/HeaderComponent";
+import LoadingDataComponent from "../components/LoadingDataComponent";
 
 const TopNewsScreen = () => {
   const { state, getTopNews } = useContext(NewsContext);
@@ -29,29 +30,16 @@ const TopNewsScreen = () => {
     }
   };
 
-  const headerComponent = () => {
-    return (
-      <>
-        <View>
-          <ButtonGroup
-            buttons={["US", "GB"]}
-            containerStyle={styles.buttonGroup}
-            selectedIndex={indexOfCountry}
-            selectedButtonStyle={styles.selectedButton}
-            onPress={() => changeCountry()}
-          />
-        </View>
-        <Text style={styles.title}>
-          Top News:{state.country == "US" ? "United States" : "Great Britain"}
-        </Text>
-      </>
-    );
-  };
-
   return (
+    listOfArticles!=undefined?
     <View>
       <FlatList
-        ListHeaderComponent={headerComponent}
+        ListHeaderComponent= { <HeaderComponent
+          title={"Top News "}
+          indexOfCountry={indexOfCountry}
+          changeCountry={changeCountry}
+          countryName={state.country}
+        />}
         data={listOfArticles}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => {
@@ -66,6 +54,9 @@ const TopNewsScreen = () => {
         }}
       />
     </View>
+    :
+    <LoadingDataComponent/>
+
   );
 };
 export default TopNewsScreen;
@@ -76,14 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  buttonGroup: {
-    margin: 5,
-    width: "30%",
-    alignSelf: "center",
-  },
-  selectedButton: {
-    backgroundColor: "blue",
   },
   title: {
     fontSize: 27,

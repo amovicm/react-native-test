@@ -13,7 +13,7 @@ const newsReducer = (state, action) => {
 const getTopNews = (dispatch) => async (country) => {
   console.log("TopNewsApi called");
   return await NewsApi.get(
-    "top-headlines?apiKey=0f2d49f8fd5e456aa66a3cd89624d318&country=" + country
+    "top-headlines?apiKey=704f31a1513349f493fbc5346c726e7c&country=" + country
   )
     .then((result) => result.data.articles)
     .catch((e) => console.log(e));
@@ -26,7 +26,7 @@ const getNewsByCategories = (dispatch) => async (
 ) => {
   console.log("NewsByCategoriy Api called");
   return await NewsApi.get(
-    "top-headlines?apiKey=0f2d49f8fd5e456aa66a3cd89624d318&country=" +
+    "top-headlines?apiKey=704f31a1513349f493fbc5346c726e7c&country=" +
       country +
       "&category=" +
       category +
@@ -43,7 +43,7 @@ const getSearchResult = (dispatch) => async (
 ) => {
   console.log("Search Api called");
   return await NewsApi.get(
-    "top-headlines?apiKey=0f2d49f8fd5e456aa66a3cd89624d318&country=" +
+    "top-headlines?apiKey=704f31a1513349f493fbc5346c726e7c&country=" +
       country +
       "&q=" +
       query

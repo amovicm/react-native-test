@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";
 import NewsItemComponent from "../components/NewsItemComponent";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { navigate } from "../navigationRef";
+import HeaderComponent from "../components/HeaderComponent";
+import LoadingDataComponent from "../components/LoadingDataComponent";
 
 const CategoriesScreen = () => {
   const [listOfSportsArticles, setListOfSportsArticles] = useState([]);
   const [listOfHealthArticles, setListOfHealthArticles] = useState([]);
-  const [
-    listOfEntertainmentArticles,
-    setListOfEntertainmentArticles,
-  ] = useState([]);
+  const [listOfEntertainmentArticles, setListOfEntertainmentArticles] = useState([]);
   const [listOfScienceArticles, setListOfScienceArticles] = useState([]);
   const [listOfTechnologyArticles, setListOfTechnologyArticles] = useState([]);
   const [listOfGeneralArticles, setListOfGeneralArticles] = useState([]);
@@ -79,30 +77,8 @@ const CategoriesScreen = () => {
     }
   };
 
-  const headerComponent = () => {
+  const renderEntertainment=()=>{
     return (
-      <>
-        <View>
-          <ButtonGroup
-            buttons={["US", "GB"]}
-            containerStyle={styles.buttonGroup}
-            selectedIndex={indexOfCountry}
-            selectedButtonStyle={styles.selectedButton}
-            onPress={() => changeCountry()}
-          />
-        </View>
-        <Text style={styles.title}>
-          Top 5 news by categories from:
-          {state.country == "US" ? "United States" : "Great Britain"}
-        </Text>
-      </>
-    );
-  };
-
-  return (
-    <ScrollView>
-      {headerComponent()}
-
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           onPress={() => navigate("Category", { category: "Entertainment" })}
@@ -128,7 +104,11 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
+    );
+  }
 
+  const renderSports=()=>{
+    return (
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           onPress={() => navigate("Category", { category: "Sports" })}
@@ -154,7 +134,11 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
+    );
+  }
 
+  const renderGeneral=()=>{
+    return (
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           onPress={() => navigate("Category", { category: "General" })}
@@ -180,7 +164,11 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
-
+    );
+  } 
+  
+  const renderHealth=()=>{
+    return (
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           onPress={() => navigate("Category", { category: "Health" })}
@@ -206,7 +194,11 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
+    );
+  }
 
+  const renderScience=()=>{
+    return (
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           onPress={() => navigate("Category", { category: "Science" })}
@@ -232,7 +224,11 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
+    );
+  }
 
+  const renderTechnology=()=>{
+    return (
       <View style={styles.categoryContainer}>
         <TouchableOpacity>
           <Text style={styles.title}>Technology</Text>
@@ -256,7 +252,21 @@ const CategoriesScreen = () => {
           }}
         />
       </View>
+    );
+  }
+  return (
+    listOfEntertainmentArticles!=undefined?
+    <ScrollView>
+      <HeaderComponent title="Top 5 news by categories from" indexOfCountry={indexOfCountry} changeCountry={changeCountry} countryName={state.country} />
+      {renderEntertainment()}
+      {renderSports()}
+      {renderGeneral()}
+      {renderHealth()}
+      {renderScience()}
+      {renderTechnology()}
     </ScrollView>
+    :
+    <LoadingDataComponent/>
   );
 };
 export default CategoriesScreen;
@@ -267,14 +277,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  buttonGroup: {
-    margin: 5,
-    width: "30%",
-    alignSelf: "center",
-  },
-  selectedButton: {
-    backgroundColor: "blue",
   },
   title: {
     fontSize: 20,
@@ -288,7 +290,7 @@ const styles = StyleSheet.create({
     padding: 2,
     backgroundColor: "#c9c6c5",
     borderRadius: 6,
-    borderWidth:2,
-    borderColor:'black'
+    borderWidth: 2,
+    borderColor: "black",
   },
 });

@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0EEEE',
         marginHorizontal:15,
         borderRadius:15,
+        borderColor:'black',
+        borderWidth:2,
         flexDirection:"row",
         justifyContent:"space-between"
     },

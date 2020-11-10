@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";
 import NewsItemComponent from "../components/NewsItemComponent";
 import SearchBar from "../components/SearchBar";
 import { ScrollView } from "react-native-gesture-handler";
+import HeaderComponent from "../components/HeaderComponent";
 
 const SearchScreen = () => {
   const { state, getSearchResult } = useContext(NewsContext);
@@ -33,28 +33,14 @@ const SearchScreen = () => {
     }
   };
 
-  const headerComponent = () => {
-    return (
-      <>
-        <View>
-          <ButtonGroup
-            buttons={["US", "GB"]}
-            containerStyle={styles.buttonGroup}
-            selectedIndex={indexOfCountry}
-            selectedButtonStyle={styles.selectedButton}
-            onPress={() => changeCountry()}
-          />
-        </View>
-        <Text style={styles.title}>
-          Search news:{state.country == "US" ? "United States" : "Great Britain"}
-        </Text>
-      </>
-    );
-  };
-
   return (
     <ScrollView>
-      {headerComponent()}
+      <HeaderComponent
+        title={"Search news"}
+        indexOfCountry={indexOfCountry}
+        changeCountry={changeCountry}
+        countryName={state.country}
+      />
       <SearchBar term={query} onTermChange={(text) => setQuery(text)} />
       <FlatList
         data={listOfArticles}
@@ -88,7 +74,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   selectedButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#101f39",
   },
   title: {
     fontSize: 27,

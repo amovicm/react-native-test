@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList, View } from "react-native";
-import { ButtonGroup } from "react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";
 import NewsItemComponent from "../components/NewsItemComponent";
 import Carousel from "react-native-snap-carousel";
 import { ScrollView } from "react-native-gesture-handler";
+import HeaderComponent from "../components/HeaderComponent";
 
 const CategoryScreen = ({route}) => {
   const { state, getNewsByCategories } = useContext(NewsContext);
@@ -35,29 +35,14 @@ const CategoryScreen = ({route}) => {
     }
   };
 
-  const headerComponent = () => {
-    return (
-      <View>
-        <View>
-          <ButtonGroup
-            buttons={["US", "GB"]}
-            containerStyle={styles.buttonGroup}
-            selectedIndex={indexOfCountry}
-            selectedButtonStyle={styles.selectedButton}
-            onPress={() => changeCountry()}
-          />
-        </View>
-        <Text style={styles.title}>
-          Category:{route.params.category} 
-          {/* {state.country == "US" ? "United States" : "Great Britain"} */}
-        </Text>
-      </View>
-    );
-  };
-
   return (
     <ScrollView style={{ flex: 1 }}>
-      {headerComponent()}
+      <HeaderComponent
+        title={"Category "+route.params.category}
+        indexOfCountry={indexOfCountry}
+        changeCountry={changeCountry}
+        countryName={state.country}
+      />
       <View>
         <Carousel
           data={listOfArticles}
@@ -89,17 +74,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  buttonGroup: {
-    margin: 5,
-    width: "30%",
-    alignSelf: "center",
-  },
-  selectedButton: {
-    backgroundColor: "blue",
-  },
   title: {
     fontSize: 27,
-    textAlign:"center",
+    textAlign: "center",
     fontWeight: "bold",
     alignSelf: "center",
   },
