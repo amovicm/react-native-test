@@ -46,6 +46,9 @@ export default function App() {
       >
         <rootNavigator.Navigator
           screenOptions={{
+            headerTitle: "HTech Test",
+            headerTitleAlign: "center",
+            headerTintColor:"white",
             headerStyle: {
               backgroundColor: "#101f39",
               borderBottomColor: "red",
@@ -55,31 +58,16 @@ export default function App() {
         >
           <rootNavigator.Screen
             name="Home"
-            options={{
-              headerTitleAlign: "center",
-              title: "HTech Test",
-              headerTintColor: "white",
-            }}
             component={BottomTabNavigationComponent}
           />
 
           <rootNavigator.Screen
             name="Article"
-            options={{
-              headerTitleAlign: "center",
-              title: "HTech Test",
-              headerTintColor: "white",
-            }}
             component={SingleArticleComponent}
           />
 
           <rootNavigator.Screen
             name="Category"
-            options={{
-              headerTitleAlign: "center",
-              title: "HTech Test",
-              headerTintColor: "white",
-            }}
             component={CategoryScreen}
           />
         </rootNavigator.Navigator>

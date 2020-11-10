@@ -8,42 +8,38 @@ import HeaderComponent from "../components/HeaderComponent";
 
 const SearchScreen = () => {
   const { state, getSearchResult } = useContext(NewsContext);
-  const [indexOfCountry, setCountryIndex] = useState(0);
   const [listOfArticles, setListOfArticles] = useState([]);
-  const [query,setQuery] = useState("");
-  
+  const [query, setQuery] = useState("");
+  const [reload, setReload] = useState(false);
+ 
+
   useEffect(() => {
     getApi();
-  }, [indexOfCountry,query]);
+  }, [reload, query]);
 
   const getApi = async () => {
-    const articles = await getSearchResult(state.country,query);
+    const articles = await getSearchResult(state.country, query);
     setListOfArticles(articles);
   };
 
-  const changeCountry = () => {
-    if (indexOfCountry == 0) {
-      state.country = "GB";
-      setCountryIndex(1);
-      console.log(state.country);
-    } else {
-      state.country = "US";
-      setCountryIndex(0);
-      console.log(state.country);
-    }
+   const reRender = () => {
+     setReload(!reload);
+   };
+
+  const renderHeader = () => {
+    return (
+      <>
+        <HeaderComponent title={"Search news"} reRender={reRender} />
+        <SearchBar term={query} onTermChange={(text) => setQuery(text)} />
+      </>
+    );
   };
 
   return (
-    <ScrollView>
-      <HeaderComponent
-        title={"Search news"}
-        indexOfCountry={indexOfCountry}
-        changeCountry={changeCountry}
-        countryName={state.country}
-      />
-      <SearchBar term={query} onTermChange={(text) => setQuery(text)} />
+    <View>
       <FlatList
         data={listOfArticles}
+        ListHeaderComponent={renderHeader()}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => {
           return (
@@ -56,7 +52,7 @@ const SearchScreen = () => {
           );
         }}
       />
-    </ScrollView>
+    </View>
   );
 };
 export default SearchScreen;

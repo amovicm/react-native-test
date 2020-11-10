@@ -7,39 +7,26 @@ import LoadingDataComponent from "../components/LoadingDataComponent";
 
 const TopNewsScreen = () => {
   const { state, getTopNews } = useContext(NewsContext);
-  const [indexOfCountry, setCountryIndex] = useState(0);
   const [listOfArticles, setListOfArticles] = useState([]);
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     getApi();
-  }, [indexOfCountry]);
+  }, [reload]);
+
+  const reRender=()=>{
+    setReload(!reload);
+  }
 
   const getApi = async () => {
     const articles = await getTopNews(state.country);
     setListOfArticles(articles);
   };
 
-  const changeCountry = () => {
-    if (indexOfCountry == 0) {
-      state.country="GB";
-      setCountryIndex(1);
-      console.log(state.country);
-    } else {
-      state.country="US";
-      setCountryIndex(0);
-      console.log(state.country);
-    }
-  };
-
   return (
     listOfArticles!=undefined?
     <View>
       <FlatList
-        ListHeaderComponent= { <HeaderComponent
-          title={"Top News "}
-          indexOfCountry={indexOfCountry}
-          changeCountry={changeCountry}
-          countryName={state.country}
-        />}
+        ListHeaderComponent= {<HeaderComponent reRender={reRender} title={"Top News "}/>}
         data={listOfArticles}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => {

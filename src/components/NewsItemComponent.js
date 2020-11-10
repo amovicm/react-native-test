@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Context as NewsContext} from "../context/NewsContext";
 import { navigate } from "../navigationRef";
 
 const NewsItemComponent = ({ title, imgSrc, desc, content }) => {
@@ -14,7 +13,7 @@ const NewsItemComponent = ({ title, imgSrc, desc, content }) => {
   return (
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
-        <Image style={styles.imageStyle} source={{ uri: imgSrc }} />
+        {imgSrc?<Image style={styles.imageStyle} source={{ uri: imgSrc }} />:<Text style={styles.noImageText}>No image</Text>}
         <Text style={styles.description}>{desc}</Text>
         <TouchableOpacity
           onPress={() =>
@@ -32,7 +31,6 @@ export default NewsItemComponent;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
     backgroundColor: "#fff",
     // alignItems: "center",
     // justifyContent: "center",
@@ -46,10 +44,15 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 25,
-    padding: 15,
+    padding: 5,
   },
   description: {
     padding: 15,
   },
-  details: { color: "blue", padding: 20, alignSelf:"flex-end" }
+  details: { color: "blue", padding: 20, alignSelf:"flex-end" },
+  noImageText:{
+    fontSize:25,
+    fontWeight:"bold",
+    textAlign:"center"
+  }
 });

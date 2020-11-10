@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Context as NewsContext } from "../context/NewsContext";
 
 const SingleArticleComponent = ({ route,navigation }) => {
   const {title, img, content}=route.params;

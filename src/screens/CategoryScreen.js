@@ -6,14 +6,14 @@ import Carousel from "react-native-snap-carousel";
 import { ScrollView } from "react-native-gesture-handler";
 import HeaderComponent from "../components/HeaderComponent";
 
-const CategoryScreen = ({route}) => {
+const CategoryScreen = ({ route }) => {
   const { state, getNewsByCategories } = useContext(NewsContext);
-  const [indexOfCountry, setCountryIndex] = useState(0);
   const [listOfArticles, setListOfArticles] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     getApi();
-  }, [indexOfCountry]);
+  }, [reload]);
 
   const getApi = async () => {
     const articles = await getNewsByCategories(
@@ -23,25 +23,15 @@ const CategoryScreen = ({route}) => {
     setListOfArticles(articles);
   };
 
-  const changeCountry = () => {
-    if (indexOfCountry == 0) {
-      state.country = "GB";
-      setCountryIndex(1);
-      console.log(state.country);
-    } else {
-      state.country = "US";
-      setCountryIndex(0);
-      console.log(state.country);
-    }
+  const reRender = () => {
+    setReload(!reload);
   };
 
   return (
     <ScrollView style={{ flex: 1 }}>
       <HeaderComponent
-        title={"Category "+route.params.category}
-        indexOfCountry={indexOfCountry}
-        changeCountry={changeCountry}
-        countryName={state.country}
+        title={"Category " + route.params.category}
+        reRender={reRender}
       />
       <View>
         <Carousel

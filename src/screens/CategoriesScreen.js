@@ -14,12 +14,14 @@ const CategoriesScreen = () => {
   const [listOfScienceArticles, setListOfScienceArticles] = useState([]);
   const [listOfTechnologyArticles, setListOfTechnologyArticles] = useState([]);
   const [listOfGeneralArticles, setListOfGeneralArticles] = useState([]);
-  const { state, getNewsByCategories } = useContext(NewsContext);
-  const [indexOfCountry, setCountryIndex] = useState(0);
+  const {state, getNewsByCategories} = useContext(NewsContext);
+  const [reload, setReload] = useState(false);
+ 
 
   useEffect(() => {
-    getApi();
-  }, [indexOfCountry]);
+    if(listOfTechnologyArticles)
+     getApi();
+  }, [reload]);
 
   const getApi = async () => {
     const sportsResponse = await getNewsByCategories(
@@ -65,16 +67,8 @@ const CategoriesScreen = () => {
     setListOfGeneralArticles(generalResponse);
   };
 
-  const changeCountry = () => {
-    if (indexOfCountry == 0) {
-      state.country = "GB";
-      setCountryIndex(1);
-      console.log(state.country);
-    } else {
-      state.country = "US";
-      setCountryIndex(0);
-      console.log(state.country);
-    }
+   const reRender = () => {
+     setReload(!reload);
   };
 
   const renderEntertainment=()=>{
@@ -92,7 +86,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -122,7 +115,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -152,7 +144,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -182,7 +173,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -212,7 +202,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -240,7 +229,6 @@ const CategoriesScreen = () => {
           renderItem={({ item, index }) => {
             return (
               <>
-                <Text></Text>
                 <NewsItemComponent
                   imgSrc={item.urlToImage}
                   title={item.title}
@@ -254,10 +242,18 @@ const CategoriesScreen = () => {
       </View>
     );
   }
-  return (
-    listOfEntertainmentArticles!=undefined?
+  console.log(listOfTechnologyArticles)
+  return listOfTechnologyArticles.length > 0 &&
+    listOfSportsArticles.length > 0 &&
+    listOfEntertainmentArticles.length > 0 &&
+    listOfScienceArticles.length > 0 &&
+    listOfGeneralArticles.length > 0 &&
+    listOfHealthArticles.length > 0 ? (
     <ScrollView>
-      <HeaderComponent title="Top 5 news by categories from" indexOfCountry={indexOfCountry} changeCountry={changeCountry} countryName={state.country} />
+      <HeaderComponent
+        title="Top 5 news by categories from"
+        reRender={reRender}
+      />
       {renderEntertainment()}
       {renderSports()}
       {renderGeneral()}
@@ -265,8 +261,14 @@ const CategoriesScreen = () => {
       {renderScience()}
       {renderTechnology()}
     </ScrollView>
-    :
-    <LoadingDataComponent/>
+  ) : (
+    <>
+      <HeaderComponent
+        title="Top 5 news by categories from"
+        reRender={reRender}
+      />
+      <LoadingDataComponent />
+    </>
   );
 };
 export default CategoriesScreen;
@@ -280,16 +282,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "black",
+    marginVertical:10,
+    width:"100%",
+    textAlign:"center",
+    color: "blue",
     fontWeight: "bold",
     alignSelf: "center",
   },
   categoryContainer: {
-    marginVertical: 1,
-    marginHorizontal: 3,
-    padding: 2,
+    padding: 1,
     backgroundColor: "#c9c6c5",
-    borderRadius: 6,
     borderWidth: 2,
     borderColor: "black",
   },
