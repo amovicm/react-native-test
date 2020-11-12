@@ -5,24 +5,17 @@ import { Context as NewsContext } from "../context/NewsContext";
 
 const HeaderComponent = ({ title,reRender }) => {
   
-  const { state } = useContext(NewsContext);
+  const { state, switchCountry } = useContext(NewsContext);
   const [indexOfCountry, setCountryIndex] = useState(0);
 
    const changeCountry = () => {
-     if (indexOfCountry == 0) {
-       state.country = "GB";
-       setCountryIndex(1);
-       console.log(state.country);
-     } else {
-       state.country = "US";
-       setCountryIndex(0);
-       console.log(state.country);
-     }
+     indexOfCountry==0?setCountryIndex(1):setCountryIndex(0);
+     switchCountry(state.country);
      reRender();
    };
 
   return (
-    <>
+    <View style={styles.container}>
       <View>
         <ButtonGroup
           buttons={["US", "GB"]}
@@ -35,13 +28,19 @@ const HeaderComponent = ({ title,reRender }) => {
       <Text style={styles.title}>
         {title}:{state.country === "US" ? " United States" : " Great Britain"}
       </Text>
-    </>
-  );
+    </View>);
 };
 
 export default HeaderComponent;
 
 const styles = StyleSheet.create({
+  container:{
+    borderColor:"black",
+    borderRadius:10,
+    borderWidth:1,
+    margin:2
+  },
+
   buttonGroup: {
     margin: 5,
     width: "30%",
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#101f39",
   },
   title: {
+    textAlign:"center",
     fontSize: 20,
     color: "black",
     fontWeight: "bold",

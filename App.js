@@ -17,6 +17,7 @@ const bottomTabNavigator = createBottomTabNavigator();
 const BottomTabNavigationComponent = () => {
   return (
     <bottomTabNavigator.Navigator
+
       tabBarOptions={{
         activeTintColor: "yellow",
         inactiveTintColor: "white",

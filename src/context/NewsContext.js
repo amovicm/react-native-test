@@ -3,8 +3,10 @@ import NewsApi from "../api/NewsApi";
 
 const newsReducer = (state, action) => {
   switch (action.type) {
-    case "get_top_news":
-      return { ...state, errorMessage: action.payload };
+    case "switch_to_us":
+      return { ...state, country: action.payload };
+    case "switch_to_gb":
+      return { ...state, country: action.payload };
     default:
       return state;
   }
@@ -52,12 +54,28 @@ const getSearchResult = (dispatch) => async (
     .catch((e) => console.log(e));
 };
 
+const switchCountry = (dispatch) => async (country) => {
+  if(country==="US"){ 
+  dispatch({
+     type: "switch_to_us",
+     payload: "GB",
+   });
+  }
+  else{
+     dispatch({
+       type: "switch_to_gb",
+       payload: "US",
+     });
+  }
+};
+
 export const { Provider, Context } = createDataContext(
   newsReducer,
   {
     getTopNews,
     getNewsByCategories,
     getSearchResult,
+    switchCountry,
   },
   {
     country: "US",

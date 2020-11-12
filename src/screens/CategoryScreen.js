@@ -28,13 +28,13 @@ const CategoryScreen = ({ route }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView>
       <HeaderComponent
         title={"Category " + route.params.category}
         reRender={reRender}
       />
       <View>
-        <Carousel
+        <Carousel style={{width:"80%",height:"100%"}}
           data={listOfArticles}
           renderItem={({ item, index }) => {
             return (
@@ -49,7 +49,7 @@ const CategoryScreen = ({ route }) => {
             );
           }}
           sliderWidth={400}
-          itemWidth={350}
+          itemWidth={300}
         />
       </View>
     </ScrollView>
