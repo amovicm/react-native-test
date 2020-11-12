@@ -1,19 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { ButtonGroup } from"react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";
 
 const HeaderComponent = ({ title,reRender }) => {
   
-  const { state, switchCountry } = useContext(NewsContext);
-  const [indexOfCountry, setCountryIndex] = useState(0);
+  const { state } = useContext(NewsContext);
+  const [indexOfCountry, setCountryIndex] = useState(state.country==="US"?0:1);
 
    const changeCountry = () => {
-     indexOfCountry==0?setCountryIndex(1):setCountryIndex(0);
-     switchCountry(state.country);
+     if(indexOfCountry===1)
+     {
+       setCountryIndex(0);
+       state.country="US";
+     }
+     else{
+       setCountryIndex(1);
+       state.country = "GB";
+     }
+     console.log(state.country);
      reRender();
    };
-
+   
   return (
     <View style={styles.container}>
       <View>

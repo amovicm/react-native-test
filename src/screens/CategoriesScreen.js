@@ -242,7 +242,6 @@ const CategoriesScreen = () => {
       </View>
     );
   }
-  console.log(listOfTechnologyArticles)
   return listOfTechnologyArticles.length > 0 &&
     listOfSportsArticles.length > 0 &&
     listOfEntertainmentArticles.length > 0 &&
