@@ -33,7 +33,7 @@ The Categories screen shows the top 5 news per category from the selected countr
 
 The search screen works instantly on typing characters in the search box. It searches and shows a list of news from the selected country.
 
-##Screenshot
+## Screenshot
 
 [![App look and feel](https://i.postimg.cc/NjJ3nTVg/scrennshot.png)](https://postimg.cc/pmjch9R7)
 
