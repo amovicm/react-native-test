@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { ButtonGroup } from"react-native-elements";
 import { Context as NewsContext } from "../context/NewsContext";

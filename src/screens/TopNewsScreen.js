@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, FlatList, View } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import { Context as NewsContext } from "../context/NewsContext";
 import NewsItemComponent from "../components/NewsItemComponent";
 import HeaderComponent from "../components/HeaderComponent";
